@@ -8,12 +8,9 @@ LIMITS AND GOALS:
          then allow the user to choose the risk there. A Pole will be added to Determine what to do.
 ~Short term goal: Uploading files to Github, however this version will remain as well Name as "RSSIEV1"
 
-
-Note
-
 --------------------------------------
 Steps For Exporting to a new Roblox Game:
-1: Drop "RSSIEV1" in "ServerScriptService", Feel free to check the script (RSSIEV1-1)
+1: Drop "RSSIEV1" in "ServerScriptService", Feel free to check the script
 2: After that Go ahead and copy the "PreSettings" folder from "RSSIEV1", Paste "PreSettings" in anything you want to port out
 3: Make sure to set the "PerentDest" to the Object Parent your trying to Export!
 4: Depending on What your Exporting Check the Bool Values to Preset States!! (Example; Script.Enable is controlled by "PreEnableScript")
@@ -24,10 +21,11 @@ Steps For Exporting to a new Roblox Game:
 
 --------------------------------------
 Steps for Importing Data
-1: Drop "RSSIEV1" in "ServerScriptService". (RSSIEV1-1)
+1: Make a Script in "ServerScriptService", paste These 2 lines Below Into the script: 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Coaxgames/RobloxCross-Server-ImportExport-Tool/main/RSSIEV1", true))()
+script.Name="RSSIEV1"
 OR
-1: Make a Script in "ServerScriptService", paste this Into the script: game:HttpGet("", true) (RSSIEV1-1)
- 
+1: Drop "RSSIEV1" in "ServerScriptService". (RSSIEV1-1)
  THEN
 2: Drop the locally saved "Preinstall" folder we saved eariler into "ServerStorage".
 3: Run the game, this will kick All players out. But click the explorer and Copy all (CRTL+A) (This will be Automated Later on, Via a plugin)
