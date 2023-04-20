@@ -22,9 +22,9 @@ Steps For Exporting to a new Roblox Game:
 --------------------------------------
 Steps for Importing Data
 1: Make a Script in "ServerScriptService", paste These 2 lines Below Into the script: 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Coaxgames/RobloxCross-Server-ImportExport-Tool/main/RSSIEV1", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Coaxgames/RobloxCross-Server-ImportExport-Tool/main/RSSIEV1%20IMPORTONLY", true))()
 script.Name="RSSIEV1"
-OR
+ OR
 1: Drop "RSSIEV1" in "ServerScriptService". (RSSIEV1-1)
  THEN
 2: Drop the locally saved "Preinstall" folder we saved eariler into "ServerStorage".
