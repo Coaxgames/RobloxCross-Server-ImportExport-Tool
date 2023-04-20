@@ -1,0 +1,88 @@
+local InstallFolder = game.ServerStorage:WaitForChild("Preinstall")
+
+local SaveID="8384"
+local DataStore = game:GetService("DataStoreService"):GetDataStore(SaveID.."RSSIEData", "InstallData")
+local CPlayerService = require(script.PlayerService)
+local IsInstalled=false
+
+--This preinstalls anything i need by using ObjectValues to Preset Parents. 
+--This is good so i can port my scripts and objects to a Whole new save by one Copy and paste, Anything i make should NOW HAVE this feature
+--check the children of this Script to see an example(Set ParentDesc to the Target Parent Name)
+local success, InstallState = pcall(function()
+	IsInstalled = DataStore:GetAsync(SaveID.."RSSIEData")
+end)
+if InstallState==nil or InstallState==false then
+	IsInstalled="FirstTime"
+	local Succ, Fail = pcall(function()
+		DataStore:SetAsync(SaveID.."RSSIEData", IsInstalled)
+	end)
+	if Fail then
+		warn(Fail)
+		script.Disabled=true
+	end
+elseif InstallState=="FirstTime" then
+	IsInstalled=true
+	local Succ, Fail = pcall(function()
+		DataStore:SetAsync(SaveID.."RSSIEData", IsInstalled)
+	end)
+	if Fail then
+		warn(Fail)
+		script.Disabled=true
+	end
+end
+print(IsInstalled)
+
+
+
+--[[Todo
+
+
+]]
+if IsInstalled=="FirstTime" then
+	for N, Obj in pairs(InstallFolder:GetChildren()) do
+		if Obj:FindFirstChild("PreSettings"):FindFirstChild("ParentDest"):IsA("ObjectValue") then--Get the StringValue
+			Obj.Parent=Obj.PreSettings.ParentDest.Value
+
+			--Get Presets
+			if Obj.PreSettings:FindFirstChild("PreEnableScript") and Obj.PreSettings:FindFirstChild("PreEnableScript"):IsA("BoolValue") then
+				if Obj:IsA("Script") or Obj:IsA("LocalScript") then--Pre enable Scripts
+					Obj.Enabled=Obj.PreSettings.PreEnableScript.Value
+				end
+			end
+			if Obj.PreSettings:FindFirstChild("PreEnableGui") and Obj.PreSettings:FindFirstChild("PreEnableGui"):IsA("BoolValue") then
+				if Obj:IsA("ScreenGui") or Obj:IsA("GuiObject") then--Pre enable Scripts
+					Obj.Visable=Obj.PreSettings.PreEnableGui.Value
+				end
+			end
+			Obj.PreSettings:Destroy()
+		end
+	end
+elseif IsInstalled==true or IsInstalled=="True" then
+	for N, Obj in pairs(InstallFolder:GetChildren()) do
+		if Obj:FindFirstChild("PreSettings"):FindFirstChild("ParentDest"):IsA("ObjectValue") then--Get the StringValue
+			Obj.Parent=Obj.PreSettings.ParentDest.Value
+
+			--Get Presets
+			if Obj.PreSettings:FindFirstChild("PreEnableScript") and Obj.PreSettings:FindFirstChild("PreEnableScript"):IsA("BoolValue") then
+				if Obj:IsA("Script") or Obj:IsA("LocalScript") then--Pre enable Scripts
+					Obj.Enabled=Obj.PreSettings.PreEnableScript.Value
+				end
+			end
+			if Obj.PreSettings:FindFirstChild("PreEnableGui") and Obj.PreSettings:FindFirstChild("PreEnableGui"):IsA("BoolValue") then
+				if Obj:IsA("ScreenGui") or Obj:IsA("GuiObject") then--Pre enable Scripts
+					Obj.Visable=Obj.PreSettings.PreEnableGui.Value
+				end
+			end
+			Obj.PreSettings:Destroy()
+		end
+	end
+end
+
+for n, Obj in pairs(game.Players:GetChildren()) do
+	if IsInstalled=="FirstTime" then
+		Obj:Kick(Obj, "Server Installing Packages, Rejoin after Copying the Workspace. if Your game is Fully done then Ignore this Setup")
+		return
+	end
+end
+
+
