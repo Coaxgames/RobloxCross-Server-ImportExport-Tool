@@ -2,7 +2,7 @@ local InstallFolder = game.ServerStorage:WaitForChild("Preinstall")
 
 local SaveID="8384"
 local DataStore = game:GetService("DataStoreService"):GetDataStore(SaveID.."RSSIEData", "InstallData")
-local CPlayerService = require(script.PlayerService)
+--local CPlayerService = require(script.PlayerService)
 local IsInstalled=false
 
 --This preinstalls anything i need by using ObjectValues to Preset Parents. 
