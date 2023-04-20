@@ -51,13 +51,14 @@ if IsInstalled=="FirstTime" then
 			end
 			if Obj.PreSettings:FindFirstChild("PreEnableGui") and Obj.PreSettings:FindFirstChild("PreEnableGui"):IsA("BoolValue") then
 				if Obj:IsA("ScreenGui") or Obj:IsA("GuiObject") then--Pre enable Scripts
-					Obj.Visable=Obj.PreSettings.PreEnableGui.Value
+					Obj.Enabled=Obj.PreSettings.PreEnableGui.Value
 				end
 			end
 			Obj.PreSettings:Destroy()
 		end
 	end
-elseif IsInstalled==true or IsInstalled=="True" then
+	print(SaveID..": Is In Studio/IE Mode")
+elseif IsInstalled==true or IsInstalled=="True" then--Not Setup, This is here incase a person wants to load their server files this way(For some reason if they should)
 	for N, Obj in pairs(InstallFolder:GetChildren()) do
 		if Obj:FindFirstChild("PreSettings"):FindFirstChild("ParentDest"):IsA("ObjectValue") then--Get the StringValue
 			Obj.Parent=Obj.PreSettings.ParentDest.Value
@@ -76,26 +77,32 @@ elseif IsInstalled==true or IsInstalled=="True" then
 			Obj.PreSettings:Destroy()
 		end
 	end
+	print(SaveID..": Has Been installed")
 end
 print(IsInstalled)
-for n, Obj in pairs(game.Players:GetChildren()) do
-	if IsInstalled=="FirstTime" then
-		Obj:Kick(Obj, "Server Installing Packages, Rejoin after Copying the Workspace. if Your game is Fully done then Ignore this Setup")
-		return
-	end
-end
+
+wait(1)
+DataStore:SetAsync(SaveID.."RSSIEData", IsInstalled)
+
 game:GetService("Players").PlayerAdded:Connect(function(plr)
 	if IsInstalled=="FirstTime" then
-		plr:Kick(plr, "Server Installing Packages, Rejoin after Copying the Workspace. if Your game is Fully done then Ignore this Setup")
+		wait(3)
+		plr:Kick("Server is Still Installing Packages, This will only Happen During Server Updates")
 		return
 	end
 end)
 game:BindToClose(function()
 	if game:GetService("RunService"):IsStudio() then return end
-	print("Close Save")
+	print(SaveID..": Is Installing")
 	DataStore:SetAsync(SaveID.."RSSIEData", IsInstalled)
 end)
 
 while true do
+	for n, Obj in pairs(game.Players:GetChildren()) do
+		if IsInstalled=="FirstTime" then
+			Obj:Kick("Server is Still Installing Packages, This will only Happen During Server Updates")
+			return
+		end
+	end
 	wait(0.1)
 end
