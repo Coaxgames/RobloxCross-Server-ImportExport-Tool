@@ -77,12 +77,22 @@ elseif IsInstalled==true or IsInstalled=="True" then
 		end
 	end
 end
-
+print(IsInstalled)
 for n, Obj in pairs(game.Players:GetChildren()) do
 	if IsInstalled=="FirstTime" then
 		Obj:Kick(Obj, "Server Installing Packages, Rejoin after Copying the Workspace. if Your game is Fully done then Ignore this Setup")
 		return
 	end
 end
-
+game:GetService("Players").PlayerAdded:Connect(function(plr)
+	if IsInstalled=="FirstTime" then
+		plr:Kick(plr, "Server Installing Packages, Rejoin after Copying the Workspace. if Your game is Fully done then Ignore this Setup")
+		return
+	end
+end)
+game:BindToClose(function()
+	if game:GetService("RunService"):IsStudio() then return end
+	print("Close Save")
+	DataStore:SetAsync(SaveID.."RSSIEData", IsInstalled)
+end)
 
