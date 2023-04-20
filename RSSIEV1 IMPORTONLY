@@ -96,3 +96,6 @@ game:BindToClose(function()
 	DataStore:SetAsync(SaveID.."RSSIEData", IsInstalled)
 end)
 
+while true do
+	wait(0.1)
+end
